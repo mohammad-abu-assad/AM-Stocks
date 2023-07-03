@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Sign Up</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --neon-color: #A5F1E9;
+            --white-color: #fff;
+            --main-bacco: #051527;
+            --light-bacco: #0A2647;
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+         body {
+           
+            background: #000;
+        }
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex ;
+            align-items: center ;
+            justify-content: center ;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            height: 550px;
+            background: #000;
+            border: 4px solid var(--light-bacco);
+            border-radius: 15px;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover {
+            border: 4px solid #00FFD1;
+            box-shadow: 0 0 20px #00FFD1,
+                inset 0 0 20px #31C6D4;
+        }
+
+        h2 {
+            font-size: 2em;
+            text-align: center;
+            color: var(--white-color);
+            transition: 0.5s;
+        }
+
+        .wrapper:hover h2 {
+            color: #FFFF00;
+
+        }
+
+        .input-box {
+            position: relative;
+            display: flex;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 50px;
+            border-radius: 7px;
+            background: transparent;
+            border: 2px solid var(--light-bacco);
+            outline: none;
+            font-size: 1em;
+            color: var(--white-color);
+            padding: 0 10px 0 35px;
+            transition: 0.5s;
+
+        }
+
+        .wrapper:hover .input-box input {
+            border: 2px solid hsl(271, 100%, 50%);
+            box-shadow: 0 0 10px #FFFF00,
+                inset 0 0 10px #FFFF00;
+        }
+
+        .input-box input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+
+        }
+
+        .input-box .icon {
+            position: absolute;
+            left: 10px;
+            color: var(--white-color);
+            font-size: 1.2em;
+            line-height: 55px;
+            transition: 0.5s;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 30%;
+            color: var(--white-color);
+            font-size: 1.2em;
+            line-height: 55px;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover .input-box .icon {
+            color: #00FF00;
+
+        }
+
+        .forgot-password {
+            margin: -15px 0 15px;
+        }
+
+
+        .forgot-password a {
+            color: var(--white-color);
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            position: relative;
+            width: 100%;
+            height: 45px;
+            background: var(--light-bacco);
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            color: var(--white-color);
+            font-weight: 500;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover button {
+            color: var(--white-color);
+            background: #ff0000;
+            box-shadow: 0 0 10px solid #ff0000,
+                inset 0 0 10px solid #ff0000;
+
+        }
+
+        .registration-link {
+            font-size: .9em;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .registration-link p {
+            color: var(--white-color);
+        }
+
+        .registration-link p a {
+            color: var(--light-bacco);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover .registration-link p a {
+            color: #ff0000;
+            box-shadow: 0 0 10px solid #ff0000,
+                inset 0 0 10px solid #ff0000;
+        }
+
+        .registration-link p a:hover {
+            text-decoration: underline;
+        }
+
+        .remember-me-box label {
+            font-weight: bold;
+            color: #FFFFFF;
+
+            margin-top: 0px;
+        }
+
+        .remember-me-box input {
+            padding: 1px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <form id="signup-form" method="post" action="/signup">
+                <h2>Sign Up</h2>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="text" title="Enter valid email address" id="email" name="email"
+                        placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="key"></ion-icon>
+                    </span>
+                    <input type="password" id="password"
+                        title="password must include at least 6 characters, 1 uppercase, 1 lowercase, a number and a special character"
+                        name="password" placeholder="Enter your password" required>
+                    <ion-icon class="eye-icon" name="eye-outline" id="toggle-password"></ion-icon>
+                </div>
+
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="key"></ion-icon>
+                    </span>
+                    <input type="password" id="confirm-password" title="Re-enter the password" name="confirm-password"
+                        placeholder="Confirm password" required>
+                    <ion-icon class="eye-icon" name="eye-outline" id="toggle-confirm"></ion-icon>
+                </div>
+                <button type="submit" id="signup">Create my account</button>
+                <div class="registration-link">
+                    <p>Already a member? <a href="/sign-in">Sign in</a></p>
+                </div>
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        const togglePassword = document.querySelector('#toggle-password');
+        const passwordT = document.querySelector('#password');
+        const confirmPasswordT = document.querySelector('#confirm-password');
+        const Confirm = document.querySelector('#toggle-confirm');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordT.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordT.setAttribute('type', type);
+        });
+
+        Confirm.addEventListener('click', function () {
+            const type = confirmPasswordT.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordT.setAttribute('type', type);
+        });
+
+        const signupForm = document.getElementById('signup-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const rememberMeInput = document.getElementById('remember-me');
+
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        const passwordLengthRegex = /.{6,}/;
+        const passwordUpperRegex = /[A-Z]/;
+        const passwordLowerRegex = /[a-z]/;
+        const passwordNumberRegex = /[0-9]/;
+        const passwordSpecialRegex = /[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>\/?]/;
+
+        emailInput.addEventListener('blur', () => {
+            if (!emailRegex.test(emailInput.value)) {
+                emailInput.style.borderColor = 'red';
+            } else {
+                emailInput.style.borderColor = '';
+            }
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            if (!validatePassword(passwordInput.value)) {
+                passwordInput.style.borderColor = 'red';
+            } else {
+                passwordInput.style.borderColor = '';
+            }
+        });
+
+        confirmPasswordInput.addEventListener('blur', () => {
+            if (!validatePassword(confirmPasswordInput.value) || confirmPasswordInput.value !== passwordInput.value) {
+                confirmPasswordInput.style.borderColor = 'red';
+            } else {
+                confirmPasswordInput.style.borderColor = '';
+            }
+        });
+
+        function validatePassword(password) {
+            return (
+                passwordLengthRegex.test(password) &&
+                passwordUpperRegex.test(password) &&
+                passwordLowerRegex.test(password) &&
+                passwordNumberRegex.test(password) &&
+                passwordSpecialRegex.test(password)
+            );
+        }
+        $('#signup-form').submit(function (event) {
+            event.preventDefault();
+            if (signupForm.checkValidity()) {
+                if (!emailRegex.test(emailInput.value)) {
+                    alert('Please enter a valid email address!');
+                } else if (!validatePassword(passwordInput.value)) {
+                    alert('Please enter a password that meets the following criteria:\n\n' +
+                        '- Minimum 6 characters\n' +
+                        '- Must include an uppercase character\n' +
+                        '- Must include a lowercase character\n' +
+                        '- Must include a number\n' +
+                        '- Must include a special character (!, @, #, etc.)\n\n' +
+                        'Please try again!');
+                } else if (confirmPasswordInput.value !== passwordInput.value) {
+                    alert("Confirm field must be equal to password field.");
+                } else {
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: $(this).attr('method'),
+                        data: $(this).serialize(),
+                        success: function (response) {
+                            window.location.href = response.redirectUrl;
+                        },
+                        error: function (xhr, status, error) {
+                            // Display error message
+                            $('#errorMessage').text('Error: ' + error);
+                            $('#errorMessage').show();
+                            $('#successMessage').hide();
+                        }
+                    });
+                    signupForm.reset();
+                    passwordInput.type = 'password';
+                }
+            } else {
+                // Display error message for empty required fields
+                const emptyFields = Array.from(signupForm.elements).filter((element) => {
+                    return element.required && !element.value;
+                });
+                alert('Please fill in all required fields: ' + emptyFields.map((element) => element.name).join(', '));
+            }
+        });
+    </script>
+</body>
+
+</html>

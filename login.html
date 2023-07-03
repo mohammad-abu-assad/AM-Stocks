@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --neon-color: #A5F1E9;
+            --white-color: #FFF;
+            --main-bacco: #051527;
+            --light-bacco: #0A2647;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #000;
+        }
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            height: 550px;
+            background: #000;
+            border: 4px solid var(--light-bacco);
+            border-radius: 15px;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover {
+            border: 4px solid #00FFD1;
+            box-shadow: 0 0 20px #00FFD1,
+                inset 0 0 20px #31C6D4;
+        }
+
+        h2 {
+            font-size: 2em;
+            text-align: center;
+            color: var(--white-color);
+            transition: 0.5s;
+        }
+
+        .wrapper:hover h2 {
+            color: #FFFF00;
+
+        }
+
+        .input-box {
+            position: relative;
+            display: flex;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 50px;
+            border-radius: 7px;
+            background: transparent;
+            border: 2px solid var(--light-bacco);
+            outline: none;
+            font-size: 1em;
+            color: var(--white-color);
+            padding: 0 10px 0 35px;
+            transition: 0.5s;
+
+        }
+
+        .wrapper:hover .input-box input {
+            border: 2px solid hsl(271, 100%, 50%);
+            box-shadow: 0 0 10px #FFFF00,
+                inset 0 0 10px #FFFF00;
+        }
+
+        .input-box input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+
+        }
+
+        .input-box .icon {
+            position: absolute;
+            left: 10px;
+            color: var(--white-color);
+            font-size: 1.2em;
+            line-height: 55px;
+            transition: 0.5s;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 30%;
+            color: var(--white-color);
+            font-size: 1.2em;
+            line-height: 55px;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover .input-box .icon {
+            color: #00FF00;
+
+        }
+
+        .forgot-password {
+            margin: -15px 0 15px;
+        }
+
+
+        .forgot-password a {
+            color: var(--white-color);
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            position: relative;
+            width: 100%;
+            height: 45px;
+            background: var(--light-bacco);
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            color: var(--white-color);
+            font-weight: 500;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover button {
+            color: var(--white-color);
+            background: #ff0000;
+            box-shadow: 0 0 10px solid #ff0000,
+                inset 0 0 10px solid #ff0000;
+
+        }
+
+        .registration-link {
+            font-size: .9em;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .registration-link p {
+            color: var(--white-color);
+        }
+
+        .registration-link p a {
+            color: var(--light-bacco);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover .registration-link p a {
+            color: #ff0000;
+            box-shadow: 0 0 10px solid #ff0000,
+                inset 0 0 10px solid #ff0000;
+        }
+
+        .registration-link p a:hover {
+            text-decoration: underline;
+        }
+
+        .remember-me-box label {
+            font-weight: bold;
+            color: #FFF;
+            margin-top: 0px;
+        }
+
+        .remember-me-box input {
+            padding: 1px;
+            border: 1px solid #0A2647;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 30px;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    <title>Neon Login Form</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <form method="post" action="/login" id="login-form">
+                <h2>Login To Your Account</h2>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="person"></ion-icon>
+                    </span>
+                    <input type="text" title="Enter valid email address" id="email" name="email"
+                        placeholder="Enter your email" required>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="key"></ion-icon>
+                    </span>
+                    <input type="password" name="password"
+                        title="Password must include at least 6 characters, 1 uppercase, 1 lowercase, a number, and a special character"
+                        id="password" placeholder="Password" required>
+                    <ion-icon class="eye-icon" name="eye-outline" id="toggle-password"></ion-icon>
+                </div>
+                <div class="remember-me-box">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Remember Me</label>
+                </div>
+                <button type="submit" id="login-btn">Login</button>
+                <div class="registration-link">
+                    <p>Don't have an account? <a href="/sign-up">Sign up</a></p>
+                    <p>Forget password? <a href="/contact-us">Contact us</a></p>
+                </div>
+                <div id="errorMessage" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const togglePassword = document.querySelector('#toggle-password');
+        const passwordInput = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+        });
+        const rememberMeCheckbox = document.getElementById('remember-me');
+        const form = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        function initEmail() {
+            const rememberedEmail = window.localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                emailInput.value = rememberedEmail;
+                rememberMeCheckbox.checked = true;
+            }
+        }
+        initEmail();
+        $('#login-form').submit(function (event) {
+            event.preventDefault();
+            if (form.checkValidity()) {
+                // Check if "Remember Me" checkbox is checked
+                const rememberMeCheckbox = $('#remember-me');
+                if (rememberMeCheckbox.prop('checked')) {
+                    const email = $('#email').val();
+                    window.localStorage.setItem('rememberedEmail', email);
+                    // Set the email as a cookie with an expiration date
+                    $.ajax({
+                        url: "/add-cookie",
+                        type: "POST",
+                        data: { email: email },
+                        success: function (data) {
+                            // Handle success or any additional logic
+                            console.log("Cookie added successfully");
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle error
+                            console.log("Error adding cookie:", error);
+                        }
+                    });
+                } else {
+                    window.localStorage.removeItem('rememberedEmail');
+                    // If the checkbox is not checked, remove the cookie
+                    $.ajax({
+                        url: "/delete-cookie",
+                        type: "DELETE",
+                        success: function (data) {
+                            // Handle success or any additional logic
+                            console.log("Cookie deleted successfully");
+                        }
+                    });
+                }
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        // Redirect to the dashboard or handle the successful login
+                        window.location.href = response.redirectUrl;
+                    },
+                    error: function (xhr, status, error) {
+                        // Display error message on the login page
+                        $('#errorMessage').text('Error: ' + 'Invalid email or password');
+                        $('#errorMessage').show();
+                    }
+                });
+                form.reset();
+                passwordInput.type = 'password';
+            } else {
+                form.reportValidity();
+            }
+        });
+    </script>
+</body>
+
+</html>

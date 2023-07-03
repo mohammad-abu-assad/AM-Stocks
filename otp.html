@@ -1,0 +1,249 @@
+<!-- otp.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --neon-color: #A5F1E9;
+            --white-color: #FFF;
+            --main-bacco: #051527;
+            --light-bacco: #0A2647;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #000;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            height: 550px;
+            background: #000;
+            border: 4px solid var(--light-bacco);
+            border-radius: 15px;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover {
+            border: 4px solid #00FFD1;
+            box-shadow: 0 0 20px #00FFD1,
+                inset 0 0 20px #31C6D4;
+        }
+
+        h2 {
+            font-size: 2em;
+            text-align: center;
+            color: var(--white-color);
+            transition: 0.5s;
+        }
+
+        .wrapper:hover h2 {
+            color: #FFFF00;
+
+        }
+
+        .input-box {
+            position: relative;
+            display: flex;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 50px;
+            border-radius: 7px;
+            background: transparent;
+            border: 2px solid var(--light-bacco);
+            outline: none;
+            font-size: 1em;
+            color: var(--white-color);
+            padding: 0 10px 0 35px;
+            transition: 0.5s;
+
+        }
+
+        .wrapper:hover .input-box input {
+            border: 2px solid hsl(271, 100%, 50%);
+            box-shadow: 0 0 10px #FFFF00,
+                inset 0 0 10px #FFFF00;
+        }
+
+        .input-box input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+
+        }
+
+        .input-box .icon {
+            position: absolute;
+            left: 10px;
+            color: var(--white-color);
+            font-size: 1.2em;
+            line-height: 55px;
+            transition: 0.5s;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 30%;
+            color: var(--white-color);
+            font-size: 1.2em;
+            line-height: 55px;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover .input-box .icon {
+            color: #00FF00;
+
+        }
+
+        button {
+            position: relative;
+            width: 100%;
+            height: 45px;
+            background: var(--light-bacco);
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            color: var(--white-color);
+            font-weight: 500;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover button {
+            color: var(--white-color);
+            background: #ff0000;
+            box-shadow: 0 0 10px solid #ff0000,
+                inset 0 0 10px solid #ff0000;
+
+        }
+
+        .registration-link {
+            font-size: .9em;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .registration-link p {
+            color: var(--white-color);
+        }
+
+        .registration-link p a {
+            color: var(--light-bacco);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.5s;
+        }
+
+        .wrapper:hover .registration-link p a {
+            color: #ff0000;
+            box-shadow: 0 0 10px solid #ff0000,
+                inset 0 0 10px solid #ff0000;
+        }
+
+        .registration-link p a:hover {
+            text-decoration: underline;
+        }
+
+        .remember-me-box label {
+            font-weight: bold;
+            color: #FFF;
+            margin-top: 0px;
+        }
+
+        .remember-me-box input {
+            padding: 1px;
+            border: 1px solid #0A2647;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 30px;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    <title>Neon OTP Form</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <form method="post" action="/verify-otp" id="otp-form">
+                <h2>Enter OTP</h2>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="key"></ion-icon>
+                    </span>
+                    <input type="text" name="otp" id="otp" placeholder="Enter your OTP" required>
+                </div>
+                <button type="submit" id="verify-btn">Verify OTP</button>
+                <div id="errorMessage" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const verifyBtn = document.querySelector('#verify-btn');
+        const otpInput = document.querySelector('#otp');
+        const otpForm = document.querySelector('#otp-form');
+        const errorMessage = document.querySelector('#errorMessage');
+
+        otpForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            const otp = otpInput.value;
+
+            // Create an AJAX request
+            $.ajax({
+                type: 'POST',
+                url: '/verify-otp',
+                data: { otp: otp },
+                success: function (response) {
+                    // On successful response, redirect to the dashboard
+                    window.location.href = response.redirectUrl;
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response here
+                    errorMessage.textContent = "OTP verification failed. Please try again."; // Display an error message to the user
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

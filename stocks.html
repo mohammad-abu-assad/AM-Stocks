@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Stock Viewer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --neon-color: #A5F1E9;
+      --white-color: #fff;
+      --main-bacco: #000;
+      --light-bacco: #0A2647;
+
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--main-bacco) !important;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: var(--white-color);
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--white-color);
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      width: 250px;
+      height: 30px;
+      border-radius: 7px;
+      background: transparent;
+      border: 2px solid var(--light-bacco);
+      outline: none;
+      font-size: 1em;
+      color: var(--white-color);
+      padding: 0 10px;
+      transition: 0.5s;
+    }
+
+    input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    button {
+      padding: 8px 20px;
+      background-color: var(--light-bacco);
+      border: none;
+      border-radius: 5px;
+      color: var(--white-color);
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    button:hover {
+      color: var(--white-color);
+      background-color: #ff0000;
+      box-shadow: 0 0 10px solid #ff0000,
+        inset 0 0 10px solid #ff0000;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--light-bacco);
+      color: var(--white-color);
+    }
+
+    th:first-child,
+    td:first-child {
+      font-weight: bold;
+    }
+
+    .remove-icon {
+      cursor: pointer;
+      margin-left: 30px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div id="content">
+    <h1>Stock Viewer</h1>
+
+    <div>
+      <h2>Search Stock</h2>
+      <input type="text" id="searchInput" placeholder="Enter stock symbol">
+      <button id="searchButton">Search</button>
+    </div>
+    <div>
+      <h2>Add Stock</h2>
+      <input type="text" id="addInput" placeholder="Enter stock symbol">
+      <button id="addButton">Add</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Name</th>
+          <th>Last Price</th>
+          <th>Change</th>
+          <th>Change Percent</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="stockTableBody">
+      </tbody>
+    </table>
+  </div>
+
+
+  <script>
+    var user = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('user')));
+    if (!user) {
+      pram = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('pram')));
+      user = pram.user;
+    }
+
+    $(document).ready(function () {
+      // Function to fetch stock data from AlphaVantage API
+      var apiKey = window.localStorage.getItem('apiKey');
+      if (!apiKey) {
+        var input = prompt("Please enter a valid cloud IEX api key:")
+        window.localStorage.setItem('apiKey', input);
+        apiKey = input;
+      }
+
+      function fetchStockData(symbol) {
+        // const apiKey = 'sk_759f1a81608e49d1af9130765676c324';
+        var apiKey = window.localStorage.getItem('apiKey');
+        const apiUrl = `https://cloud.iexapis.com/stable/stock/${symbol}/quote?token=${apiKey}`;
+
+        return $.ajax({
+          url: apiUrl,
+          method: "GET",
+          dataType: "json"
+        }).then(function (data) {
+          if (data) {
+            const stockData = {
+              symbol: data.symbol,
+              name: data.companyName,
+              lastPrice: data.latestPrice,
+              change: data.change,
+              changePercent: data.changePercent
+            };
+            return stockData;
+          }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+          throw new Error("Failed to fetch stock data.");
+        });
+      }
+      const symbol = "AAPL";
+      const stockDataPromise = fetchStockData(symbol);
+
+      stockDataPromise
+        .then(function (stockData) {
+          console.log("you have a valid APPI Key");
+        })
+        .catch(function (error) {
+          var input = prompt("Please enter a valid cloud IEX api key:")
+          window.localStorage.setItem('apiKey', input);
+          apiKey = input;
+          location.reload();
+        });
+
+
+      // Function to add a stock to the table
+      function addStockToTable(stockData) {
+        const tableBody = $("#stockTableBody");
+
+        const existingSymbols = tableBody.find("td:first-child").map(function () {
+          return $(this).text();
+        }).get();
+
+        if (existingSymbols.includes(stockData.symbol)) {
+          console.log(`Stock symbol ${stockData.symbol} already exists in the table.`);
+          return;
+        }
+
+        const row = $("<tr>");
+
+        row.html(`
+          <td>${stockData.symbol}</td>
+          <td>${stockData.name}</td>
+          <td>${stockData.lastPrice}</td>
+          <td>${stockData.change}</td>
+          <td>${stockData.changePercent}</td>
+          <td><button class="viewButton">View Details</button> <span class="remove-icon"><i class="fas fa-trash"></i></span></td>
+        `);
+        tableBody.append(row);
+      }
+      // Function to remove a stock row from the table
+      function removeStockRow(symbol) {
+        const tableBody = $("#stockTableBody");
+        const row = tableBody.find(`tr:has(td:first-child:contains(${symbol}))`);
+        row.remove();
+
+        // Update user.symbols and send the updated user data to the server
+        const updatedSymbols = user.symbols.split(',').filter(s => s !== symbol);
+        user.symbols = updatedSymbols.join(',');
+
+        const updatedUserData = {
+          email: user.email,
+          symbols: user.symbols
+        };
+
+        // Make an AJAX request to update the user data
+        $.ajax({
+          url: "/api/user",
+          method: "PUT",
+          data: updatedUserData,
+          success: function (response) {
+            console.log("User data updated successfully:", response);
+            // Update user in window.location.search
+            const searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("user", encodeURIComponent(JSON.stringify(user)));
+            const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+            window.history.replaceState(null, null, newUrl);
+          },
+          error: function (error) {
+            console.error("Error updating user data:", error);
+          }
+        });
+      }
+
+      // Function to search for a stock
+      function searchStock() {
+        const searchInput = $("#searchInput");
+        const filter = searchInput.val().trim().toUpperCase();
+        const tableBody = $("#stockTableBody");
+
+        tableBody.find("tr").each(function () {
+          const symbol = $(this).find("td:first-child").text();
+
+          if (symbol.indexOf(filter) === 0) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      }
+
+      // Function to add a stock
+      function addStock() {
+        const addInput = $("#addInput");
+        const symbol = addInput.val().trim().toUpperCase();
+
+        if (!symbol) {
+          alert("Please enter a stock symbol.");
+          return;
+        }
+
+        const tableBody = $("#stockTableBody");
+        const existingSymbols = tableBody.find("td:first-child").map(function () {
+          return $(this).text();
+        }).get();
+
+        if (existingSymbols.includes(symbol)) {
+          console.log(`Stock symbol ${symbol} already exists in the table.`);
+          return;
+        }
+
+        // Fetch stock data and update the table
+        fetchStockData(symbol)
+          .then(function (stockData) {
+            addStockToTable(stockData);
+            addInput.val("");
+
+            // Store added stock in user.symbols
+            user.symbols += `,${symbol}`;
+            console.log(user.symbols);
+
+            // Send the updated user data to the server
+            const updatedUserData = {
+              email: user.email,
+              symbols: user.symbols
+            };
+
+            // Make an AJAX request to update the user data
+            $.ajax({
+              url: "/api/user",
+              method: "PUT",
+              data: updatedUserData,
+              success: function (response) {
+                console.log("User data updated successfully:", response);
+                // Update user in window.location.search
+                const searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("user", encodeURIComponent(JSON.stringify(user)));
+                const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+                window.history.replaceState(null, null, newUrl);
+              },
+              error: function (error) {
+                console.error("Error updating user data:", error);
+              }
+            });
+          })
+          .catch(function (error) {
+            console.log("Error:", error);
+            alert("Failed to fetch stock data. Please make sure the symbol is valid.");
+          });
+      }
+
+
+      // Function to view stock details
+      function viewDetails(symbol) {
+        const url = `details?symbol=${symbol}`;
+        window.location.assign(url);
+        localStorage.setItem('symbol', symbol);
+      }
+
+      // Function to retrieve added stocks from user.symbols
+      function getAddedStocks() {
+        const symbols = user.symbols.split(",");
+        return symbols ? symbols : [];
+      }
+
+      // Function to refresh stock data without changing the table
+      function refreshStockData() {
+        const tableBody = $("#stockTableBody");
+        const addedStocks = getAddedStocks();
+        const symbols = user.symbols.split(',');
+
+        symbols.forEach(function (symbol) {
+          fetchStockData(symbol)
+            .then(function (stockData) {
+              const row = tableBody.find(`tr:has(td:first-child:contains(${stockData.symbol}))`);
+
+              if (row.length > 0) {
+                row.find("td:nth-child(2)").text(stockData.name);
+                row.find("td:nth-child(3)").text(stockData.lastPrice);
+                row.find("td:nth-child(4)").text(stockData.change);
+                row.find("td:nth-child(5)").text(stockData.changePercent);
+              }
+            })
+            .catch(function (error) {
+              console.log("Error:", error);
+            });
+          console.log("updated");
+        });
+      }
+
+      // Attach event listeners to the buttons and input fields
+      $("#searchButton").on("click", searchStock);
+      $("#addButton").on("click", addStock);
+      $("#searchInput").on("input", searchStock);
+
+      $("#stockTableBody").on("click", ".viewButton", function () {
+        const symbol = $(this).closest("tr").find("td:first-child").text();
+        viewDetails(symbol);
+      });
+      $("#stockTableBody").on("click", ".remove-icon", function () {
+        const symbol = $(this).closest("tr").find("td:first-child").text();
+        removeStockRow(symbol);
+        //location.reload();
+      });
+
+      const symbolsToAdd = user.symbols.split(",");
+      console.log(symbolsToAdd);
+
+      symbolsToAdd.forEach(function (symbol) {
+        fetchStockData(symbol)
+          .then(function (stockData) {
+            addStockToTable(stockData);
+          })
+          .catch(function (error) {
+            console.log("Error:", error);
+          });
+      });
+
+      setInterval(refreshStockData, 15000);
+
+      // Retrieve added stocks from user.symbols and populate the table
+      const addedStocks = getAddedStocks();
+      addedStocks.forEach(function (symbol) {
+        fetchStockData(symbol)
+          .then(function (stockData) {
+            addStockToTable(stockData);
+          })
+          .catch(function (error) {
+            console.log("Error:", error);
+          });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

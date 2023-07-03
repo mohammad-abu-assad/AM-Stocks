@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AMstoks - Home</title>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>AMstoks - Home</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #000 !important;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .header {
+                background-color: #333;
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .header h1 {
+                margin: 0;
+            }
+
+            .navbar {
+                background-color: #0A2647;
+                padding: 20px;
+                position: fixed;
+                width: 100%;
+                z-index: 100;
+            }
+
+            .navbar ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .navbar li {
+                margin-right: 20px;
+            }
+
+            .navbar a {
+                text-decoration: none;
+                color: #A5F1E9;
+                font-weight: bold;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 70px auto 20px;
+                padding: 20px;
+            }
+
+            .hero-section {
+                text-align: center;
+                padding: 40px;
+            }
+
+            .hero-section h2 {
+                font-size: 36px;
+                margin-bottom: 20px;
+                color: #0A2647;
+            }
+
+            .hero-section p {
+                font-size: 18px;
+                color: #0A2647;
+                margin-bottom: 40px;
+            }
+
+            .feature-section {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 40px;
+            }
+
+            .feature-section .feature {
+                flex-basis: calc(33.33% - 20px);
+                padding: 20px;
+                background-color: rgba(0, 0, 0, 0.1);
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease-in-out;
+                height: 200px;
+            }
+
+            .feature-section .feature:hover {
+                transform: translateY(-5px);
+            }
+
+            .feature-section .feature h3 {
+                font-size: 30px;
+                margin-bottom: 10px;
+                color: #0A2647;
+            }
+
+            .feature-section .feature p {
+                font-size: 16px;
+                color: #0A2647;
+            }
+
+            .footer {
+                background-color: #0A2647;
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+                margin-top: auto;
+            }
+
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+            :root {
+                --primary-color: #A5F1E9;
+                --secondary-color: #0A2647;
+                --white-color: #fff;
+                --black-color: #000;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Poppins", sans-serif;
+            }
+
+            body {
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            .navbar-brand {
+                color: var(--primary-color);
+                font-size: 1.5em;
+                font-weight: bold;
+            }
+
+            .navbar-nav .nav-item .nav-link {
+                color: var(--primary-color);
+                font-weight: bold;
+            }
+
+            h1 {
+                color: var(--primary-color);
+                font-size: 2em;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            h2 {
+                color: var(--primary-color);
+                font-size: 1.5em;
+                margin-bottom: 10px;
+            }
+
+            .footer {
+                background-color: #0A2647;
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+        </style>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="/">AM Stocks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" id="dashboard-item">
+                    <a class="nav-link" href="/dashboard">Dashboard</a>
+                </li>
+                <li class="nav-item" id="login-item">
+                    <a class="nav-link" href="/sign-in">Login</a>
+                </li>
+                <li class="nav-item" id="signup-item">
+                    <a class="nav-link" href="/sign-up">Sign Up</a>
+                </li>
+                <li class="nav-item" id="contact-item">
+                    <a class="nav-link" href="/contact-us">Contact Us</a>
+                </li>
+                <li class="nav-item" id="signout-item">
+                    <a class="nav-link" href="/sign-out">sign out</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div id="content">
+        <div class="container">
+            <section class="hero-section">
+                <h2>Welcome to AMstoks</h2>
+                <p>Explore a wide range of stocks and manage your investments with ease.</p>
+                <a href="/sign-in"
+                    style="padding: 10px 20px; background-color: #0A2647; color: #fff; text-decoration: none;">Get
+                    Started</a>
+            </section>
+
+            <section class="feature-section">
+                <div class="feature">
+                    <h3>Real-Time Stock Data</h3>
+                    <p>Stay up-to-date with the latest stock prices, charts, and trends.</p>
+                </div>
+                <div class="feature">
+                    <h3>Portfolio Management</h3>
+                    <p>Track and manage your investment portfolio with powerful tools.</p>
+                </div>
+                <div class="feature">
+                    <h3>Customizable Alerts</h3>
+                    <p>Receive personalized alerts for price changes, news, and more.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <footer class="footer">
+        &copy; 2023 AMstoks. All rights reserved.
+    </footer>
+    <script src="/node_modules/whatwg-fetch/dist/fetch.umd.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var pram = JSON.parse(decodeURIComponent(new URLSearchParams(window.location.search).get('pram')));
+        function showAll(){
+            $("#dashboard-item").show();
+            $("#login-item").show();
+            $("#signup-item").show();
+            $("#contact-item").show();
+        }
+        $('#signout-item').hide();
+        function loadPage(action) {
+            $.get(action, function (data) {
+                $("#content").html(data);
+            });
+            if (action === "/load-signup")
+            {
+                showAll();
+                $("#signup-item").hide();
+            }
+            else if(action === "/load-login"){
+                showAll();
+                $("#login-item").hide();
+            }
+            else if( action === "/load-contactus")
+            {
+                showAll();
+                $("#contact-item").hide();
+            }
+            else if( action === "/load-stocks")
+            {
+                showAll();
+                $("#dashboard-item").hide();
+                $("#login-item").hide();
+                $("#signup-item").hide();
+                $("#signout-item").show();
+            }
+
+        }
+        if (pram) {
+            loadPage(pram.action);
+        }
+        else {
+            // Fetch the image from the server
+            fetch('/image')
+                .then(response => response.blob()) // Convert the response to a Blob
+                .then(blob => {
+                    // Create a URL object from the Blob
+                    const imageUrl = URL.createObjectURL(blob);
+
+                    // Set the image as the background of the body
+                    document.body.style.backgroundImage = `url(${imageUrl})`;
+                })
+                .catch(error => {
+                    console.error('Error fetching image:', error);
+                });
+        }
+
+    </script>
+</body>
+
+</html>
